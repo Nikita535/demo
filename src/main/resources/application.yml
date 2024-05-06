@@ -1,0 +1,28 @@
+server:
+  servlet:
+    context-path: "/api"
+
+
+logging:
+  level:
+    root: info
+    ru.: info
+    sql: debug
+    web: debug
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5555/sber_service?prepareThreshold=0
+    username: postgres
+    password: postgres
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      connection-test-query: SELECT 1
+      maximum-pool-size: 20
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update

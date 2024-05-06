@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS match_team ADD IF NOT EXISTS count_members BIGSERIAL;

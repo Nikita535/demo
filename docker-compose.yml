@@ -1,0 +1,62 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:12.9
+    environment:
+      POSTGRES_DB: "sber_service"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    command: ["postgres", "-c", "log_statement=all"]
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - "5555:5432"
+    networks:
+      - postgres-net
+
+  pgadmin:
+    container_name: pgadmin_diplom_event_service
+    image: dpage/pgadmin4:5.7
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "lkspguser@mtsbank.ru"
+      PGADMIN_DEFAULT_PASSWORD: "pgadminpwd4lks"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "5666:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - postgres-net
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_CREATE_TOPICS: "notification-topic:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    networks:
+      - postgres-net
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - postgres-net
+
+
+networks:
+  postgres-net:
+    driver: bridge
