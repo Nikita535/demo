@@ -25,28 +25,28 @@ public interface TeamApi {
     @Operation(description = "Изменить команду или ее состав")
     TeamDto updateTeam(
             @RequestBody TeamPatchDto teamPatchDto,
-            @PathVariable Long id
+            @PathVariable String id
     );
 
     @PostMapping("/join/{id}")
     @Operation(description = "Вступить в команду")
     ResponseEntity<TeamDto> joinTeam(
-            @RequestParam Long userId,
-            @PathVariable Long id
+            @RequestParam String userId,
+            @PathVariable String id
     );
 
     @PostMapping("/leave/{id}")
     @Operation(description = "Вступить в команду")
     ResponseEntity<TeamDto> leaveTeam(
-            @RequestParam Long userId,
-            @PathVariable Long id
+            @RequestParam String userId,
+            @PathVariable String id
     );
 
     @DeleteMapping("{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @Operation(description = "Удалить команду")
     void deleteTeam(
-            @PathVariable Long id
+            @PathVariable String id
     );
 
     @GetMapping
@@ -57,6 +57,6 @@ public interface TeamApi {
     @Operation(description = "Получение списка команд с фильтрацией")
     ResponseEntity<TeamDto> getTeamById(
             @Parameter(description = "Идентификатор команды")
-            @PathVariable Long id
+            @PathVariable String id
     );
 }

@@ -35,7 +35,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<UserDto> getUserById(Long id) {
+    public ResponseEntity<UserDto> getUserById(String id) {
         return ResponseEntity.ok(userService.getById(id));
     }
 
@@ -45,37 +45,37 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<?> deleteUser(Long id){
+    public ResponseEntity<?> deleteUser(String id){
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
     @Override
-    public ResponseEntity<?> updateUser(String jsonUser, Long id, MultipartFile multipartFile) throws IOException {
-        userService.update(jsonUser,id,multipartFile);
+    public ResponseEntity<?> updateUser(String jsonUser, String id) throws IOException {
+        userService.update(jsonUser,id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public ResponseEntity<List<Role>> getRoles(Long id){
+    public ResponseEntity<List<Role>> getRoles(String id){
         return new ResponseEntity<>(userService.getRoles(id),HttpStatus.OK);
     }
 
     @Override
-    public Set<Role> setRole(Long id, Role role)
+    public Set<Role> setRole(String id, Role role)
     {
         return userService.addRole(id,role);
     }
 
     @Override
-    public Set<Role> removeRole(@PathVariable Long id, Role role)
+    public Set<Role> removeRole(@PathVariable String id, Role role)
     {
         return userService.removeRole(id,role);
     }
 
     @Override
-    public ResponseEntity<AuthController.JwtResponse> changePassword(UserChangePasswordDto passDto, Long id){
+    public ResponseEntity<AuthController.JwtResponse> changePassword(UserChangePasswordDto passDto, String id){
         return userService.changePassword(passDto,id);
     }
 

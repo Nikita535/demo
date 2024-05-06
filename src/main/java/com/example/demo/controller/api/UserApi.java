@@ -35,7 +35,7 @@ public interface UserApi {
     @Operation(description = "Получение пользователя по идентификатору")
     ResponseEntity<UserDto> getUserById(
             @Parameter(description = "Идентификатор пользователя")
-            @PathVariable Long id
+            @PathVariable String id
     );
 
     @PostMapping
@@ -49,43 +49,36 @@ public interface UserApi {
     @Operation(description = "Удаление пользователя")
     ResponseEntity<?> deleteUser(
             @Parameter(description = "Данные пользователя")
-            @PathVariable Long id
+            @PathVariable String id
     );
 
-    @PostMapping({"{id}"})
-    @Operation(description = "Восстановление пользователя")
-    ResponseEntity<?> activateUser(
-            @Parameter(description = "Данные пользователя")
-            @PathVariable Long id
-    );
 
     @PatchMapping({"{id}"})
     @Operation(description = "Обновление пользователя")
     ResponseEntity<?> updateUser(
             @Parameter(description = "Данные пользователя")
             @RequestParam(value = "user", required = false) String jsonUser,
-            @PathVariable Long id,
-            @RequestParam(value = "file", required = false) MultipartFile multipartFile
+            @PathVariable String id
     ) throws IOException;
 
     @GetMapping("/{id}/roles")
     @Operation(description = "Получение ролей пользователя")
     ResponseEntity<List<Role>> getRoles(
             @Parameter(description = "Id пользователя")
-            @PathVariable Long id
+            @PathVariable String id
     );
 
     @PostMapping("/role/{id}")
     @Operation(description = "Выдать роль пользователю")
     Set<Role> setRole(
-            @Parameter(description = "идентификатор пользователя") @PathVariable Long id,
+            @Parameter(description = "идентификатор пользователя") @PathVariable String id,
             @Parameter(description = "Роль") @RequestParam Role role
     );
 
     @PostMapping("/role/{id}/remove")
     @Operation(description = "Снять роль с пользователя")
     Set<Role> removeRole(
-            @Parameter(description = "идентификатор пользователя") @PathVariable Long id,
+            @Parameter(description = "идентификатор пользователя") @PathVariable String id,
             @Parameter(description = "Роль") @RequestParam Role role
     );
 
@@ -96,7 +89,7 @@ public interface UserApi {
             @Parameter(description = "Пароль пользователя")
             @RequestBody UserChangePasswordDto passDto,
             @Parameter(description = "Идентификатор пользователя")
-            @PathVariable Long id
+            @PathVariable String id
     );
 
 }

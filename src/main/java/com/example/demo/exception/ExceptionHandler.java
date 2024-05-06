@@ -1,14 +1,12 @@
 package com.example.demo.exception;
 
-import diplom.eventservice.exception.EventException.EventNotFoundException;
-import diplom.eventservice.exception.EventException.EventServiceMessages;
-import diplom.eventservice.exception.TeamException.TeamNotFoundException;
-import diplom.eventservice.exception.TeamException.TeamServiceMessages;
-import diplom.eventservice.exception.UserException.UserAlreadyExistException;
-import diplom.eventservice.exception.UserException.UserNotFoundException;
-import diplom.eventservice.exception.UserException.UserServiceMessages;
-import diplom.eventservice.exception.base.BaseException;
-import diplom.eventservice.model.dto.Result;
+import com.example.demo.dto.Result;
+import com.example.demo.exception.TeamException.TeamNotFoundException;
+import com.example.demo.exception.TeamException.TeamServiceMessages;
+import com.example.demo.exception.UserException.UserAlreadyExistException;
+import com.example.demo.exception.UserException.UserNotFoundException;
+import com.example.demo.exception.UserException.UserServiceMessages;
+import com.example.demo.exception.base.BaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +37,14 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler({
             UserAlreadyExistException.class,
             UserNotFoundException.class,
-            TeamNotFoundException.class,
-            EventNotFoundException.class})
+            TeamNotFoundException.class})
     private ResponseEntity<Object> handleUserException(BaseException ex){
         if(ex instanceof UserAlreadyExistException){
             return buildErrorResult(UserServiceMessages.USER_ALREADY_EXISTS, HttpStatus.BAD_REQUEST,ex);
         }else if(ex instanceof UserNotFoundException){
             return buildErrorResult(UserServiceMessages.USER_NOT_FOUND, HttpStatus.BAD_REQUEST,ex);
-        }else if(ex instanceof TeamNotFoundException){
-            return buildErrorResult(TeamServiceMessages.TEAM_NOT_FOUND, HttpStatus.BAD_REQUEST,ex);
-        }else if(ex instanceof EventNotFoundException){
-            return buildErrorResult(EventServiceMessages.EVENT_NOT_FOUND, HttpStatus.BAD_REQUEST,ex);
+        }else if(ex instanceof TeamNotFoundException) {
+            return buildErrorResult(TeamServiceMessages.TEAM_NOT_FOUND, HttpStatus.BAD_REQUEST, ex);
         }
         return buildErrorResult(UserServiceMessages.USER_NOT_FOUND, HttpStatus.BAD_REQUEST,ex);
     }

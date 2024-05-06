@@ -26,12 +26,12 @@ public class TeamController implements TeamApi {
     }
 
     @Override
-    public TeamDto updateTeam(TeamPatchDto teamPatchDto, Long id){
+    public TeamDto updateTeam(TeamPatchDto teamPatchDto, String id){
         return teamService.update(teamPatchDto,id);
     }
 
     @Override
-    public void deleteTeam(Long id){
+    public void deleteTeam(String id){
         teamService.delete(id);
     }
     @Override
@@ -41,17 +41,17 @@ public class TeamController implements TeamApi {
     }
 
     @Override
-    public ResponseEntity<TeamDto> getTeamById(Long id) {
+    public ResponseEntity<TeamDto> getTeamById(String id) {
         return ResponseEntity.ok(teamService.getById(id));
     }
 
     @Override
-    public ResponseEntity<TeamDto> joinTeam(Long userId, Long id) {
+    public ResponseEntity<TeamDto> joinTeam(String userId, String id) {
         return ResponseEntity.ok(teamService.joinTeam(userId, id));
     }
 
     @Override
-    public ResponseEntity<TeamDto> leaveTeam(Long userId, Long id) {
+    public ResponseEntity<TeamDto> leaveTeam(String userId, String id) {
         return ResponseEntity.ok(teamService.leaveTeam(userId, id));
     }
 }
